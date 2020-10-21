@@ -1,4 +1,4 @@
-[title]: - "Using scp to transfer files to OSG Connect"
+[title]: - "Use scp To Transfer Files To and From OSG Connect"
 
 Background
 ----------
@@ -19,8 +19,7 @@ the copy to end up. For example:
 Files on remote systems (like an OSG login node) are indicated using
 `username@machine:/path/to/file`.
 
-Transfer files to OSG Connect
------
+## Transfer Files To OSG Connect
 
 Let's say you have a file you wish to transfer to OSG Connect named `my_file.txt`.
 
@@ -31,14 +30,22 @@ that you will **not** be logged into OSG Connect when you perform this step.
 
     $ scp my_file.txt username@loginNN.osgconnect.net:/home/username/
 
+Where **NN** is the specific number of your assigned login node (i.e. `04` or `05`).
+
+Large files (>100MB in size) can be uploaded to your `/public` directory also using `scp`:
+
+    $ scp my_large_file.gz username@loginNN.osgconnect.net:/public/username/
+
+## Transfer Directories To OSG Connect
+
 To copy directories using `scp`, add the (recursive) `-r` option to your scp command. 
 
 For example:
 
     $ scp -r my_Dir username@loginNN.osgconnect.net:/home/username/
 
-Transfer files from OSG Connect
------
+## Transfer Files From OSG Connect
+
 To transfer files from OSG Connect back to your laptop or desktop you can use the `scp` as shown above, 
 but with the source being the copy that is located on OSG Connect:
 
@@ -46,8 +53,12 @@ but with the source being the copy that is located on OSG Connect:
 
 where `./` sets the destination of the copy to your current location on your computer 
 
-More Information
-----------------
+## Additional Related Links
 
--   [The Unix
-    Shell](<http://swc-osg-workshop.github.io/2014-12-15-UChicago/novice/shell/index.html>)
+[Introduction to Data Management on OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/12000002985)   
+[The Unix Shell](http://swc-osg-workshop.github.io/2014-12-15-UChicago/novice/shell/index.html)
+
+## Getting Help
+
+For assistance or questions, please email the OSG User Support team  at [support@osgconnect.net](mailto:support@osgconnect.net) or visit the [help desk and community forums](http://support.opensciencegrid.org).
+
