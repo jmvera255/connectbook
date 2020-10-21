@@ -2,21 +2,21 @@
 
 [TOC]
 
-## Overview
+# Overview
 
 StashCache is a data service for OSG which transparently caches data near 
 compute sites for faster delivery of large files. StashCache is an alternative 
 method for transferring large files needed or produced by your jobs and 
 requires the use of a bash script as the executable of your job.
 
-## Important Considerations
+# Important Considerations
 
 As described in the [Introduction to Data Management on OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/12000002985) 
 any data, files, or even software that is >100MB should be staged in 
 your `/public` directory and only input and output files >1GB and <10GB 
 should be transferred using StashCache. 
 
-## Use StashCache To Tranfer Large Input Files 
+# Use StashCache To Tranfer Large Input Files 
 
 1) Place your large files your `/public` public directory  
 which is accessible via your OSG Connect login node at `/public/username` 
@@ -32,9 +32,10 @@ guide may be helpful.
 This tells HTCondor that your jobs must run on executes nodes that 
 have access StashCache and to OSG Connect modules.
 
-3) Add two commands to the job executable script to first load the StashCache 
-module and then use the command `stashcp` to transfer the large input file 
-from a cache site to the execute node where the job is running:
+3) Add three commands to the job executable script to (1) load the StashCache 
+module, (2) use the command `stashcp` to transfer the large input file 
+from a cache site to the execute node where the job is running, and (3) 
+delete the large input file before the job terminates:
 
 	#!/bin/bash
 
@@ -46,6 +47,13 @@ from a cache site to the execute node where the job is running:
 
 	# remaining commands to be executed in job
 	...
+	
+	# delete large input from public
+	rm <file_name>
+
+Any large input files transferred from `/public` should be deleted before 
+the job terminates, otherwise HTCondor will mistake these files for output 
+and will transfer them back to your home directory.
 
 **Note how the `/public` directory is mapped to the `/osgconnect/public` namespace 
 under StashCache. For example, if the data file is located at 
@@ -54,7 +62,7 @@ transfer this file into your current working directory on the compute host would
 
 	stashcp /osgconnect/public/username/samples/sample01.dat  ./
 
-## Use StashCache To Tranfer Large Output Files 
+# Use StashCache To Tranfer Large Output Files 
 
 To transfer job output to StashCache after your analysis:
 
@@ -97,7 +105,7 @@ More usage options are described in the stashcp help message:
 	  -t TOKEN, --token=TOKEN
 							Token file to use for reading and/or writing
 
-## Getting Help
+# Getting Help
 
 For assistance or questions, please email the OSG User Support team 
 at [support@osgconnect.net](mailto:support@osgconnect.net) or visit 

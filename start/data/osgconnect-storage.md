@@ -1,6 +1,8 @@
 [title]: - "Introduction to Data Management on OSG Connect"
 
-## Overview
+[TOC]
+
+# Overview
 
 OSG Connect provides two locations for uploading files (data and software) that are 
 needed for running jobs: 
